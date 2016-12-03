@@ -66,12 +66,12 @@ define([
   };
 
   MultipleSelection.prototype.selectionContainer = function () {
-    var $container = $(
-      '<li class="select2-selection__choice">' +
-        '<span class="select2-selection__choice__remove" role="presentation">' +
-          '&times;' +
-        '</span>' +
-      '</li>'
+    var preChoiceRemoval = this.options.get('preChoiceRemoval');
+    var $container = $('<li>').addClass('select2-selection__choice').append(
+      $('<span>').prop('role', 'presentation')
+               .html('&times;')
+               .addClass('select2-selection__choice__remove')
+               .addClass('select2-selection__choice__remove__' + (preChoiceRemoval ? 'pre' : 'post'))
     );
 
     return $container;
@@ -92,7 +92,11 @@ define([
       var $selection = this.selectionContainer();
       var formatted = this.display(selection, $selection);
 
-      $selection.append(formatted);
+      if (this.options.get('preChoiceRemoval')) {
+        $selection.append(formatted);
+      } else {
+        $selection.prepend(formatted);
+      }
       $selection.prop('title', selection.title || selection.text);
 
       $selection.data('data', selection);

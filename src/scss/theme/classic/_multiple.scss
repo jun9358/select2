@@ -44,7 +44,13 @@
     display: inline-block;
     font-weight: bold;
 
-    margin-right: 2px;
+    &.select2-selection__choice__remove__pre {
+      margin-right: 2px;
+    }
+
+    &.select2-selection__choice__remove__post {
+      margin-left: 2px;
+    }
 
     &:hover {
       color: $remove-hover-color;
